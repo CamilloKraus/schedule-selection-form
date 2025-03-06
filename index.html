@@ -84,7 +84,7 @@
             formData.append("email", email);
             formData.append("weeks", JSON.stringify(selectedWeeks));
 
-            fetch("https://raw.githubusercontent.com/CamilloKraus/schedule-selection-form/main/Screenshot%202025-03-06%20095003.png", {
+            fetch("https://script.google.com/macros/s/AKfycby8RtYKT2XUdCF48lyoqAO9ww_pl8yVJd0-_2r7ivOQD16a2hEqpSboPr6ftivzyVYH/exec", {
                 method: "POST",
                 body: formData
             })
@@ -109,24 +109,24 @@
             <br><br>
             
             <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 6" onchange="toggleDatePicker(this)"> Week of May 6th</label>
-                <input type="date" id="date-May 6" class="date-selection" min="2024-05-06" max="2024-05-12">
+                <label><input type="checkbox" class="week-checkbox" value="May 5" onchange="toggleDatePicker(this)"> Week of May 5th</label>
+                <input type="date" id="date-May 5" class="date-selection" min="2024-05-05" max="2024-05-11">
             </div>
             <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 13" onchange="toggleDatePicker(this)"> Week of May 13th</label>
-                <input type="date" id="date-May 13" class="date-selection" min="2024-05-13" max="2024-05-19">
+                <label><input type="checkbox" class="week-checkbox" value="May 12" onchange="toggleDatePicker(this)"> Week of May 12th</label>
+                <input type="date" id="date-May 12" class="date-selection" min="2024-05-12" max="2024-05-18">
             </div>
             <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 20" onchange="toggleDatePicker(this)"> Week of May 20th</label>
-                <input type="date" id="date-May 20" class="date-selection" min="2024-05-20" max="2024-05-26">
+                <label><input type="checkbox" class="week-checkbox" value="May 19" onchange="toggleDatePicker(this)"> Week of May 19th</label>
+                <input type="date" id="date-May 19" class="date-selection" min="2024-05-19" max="2024-05-25">
             </div>
             <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 27" onchange="toggleDatePicker(this)"> Week of May 27th</label>
-                <input type="date" id="date-May 27" class="date-selection" min="2024-05-27" max="2024-06-02">
+                <label><input type="checkbox" class="week-checkbox" value="May 26" onchange="toggleDatePicker(this)"> Week of May 26th</label>
+                <input type="date" id="date-May 26" class="date-selection" min="2024-05-26" max="2024-06-01">
             </div>
             <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="June 3" onchange="toggleDatePicker(this)"> Week of June 3rd</label>
-                <input type="date" id="date-June 3" class="date-selection" min="2024-06-03" max="2024-06-09">
+                <label><input type="checkbox" class="week-checkbox" value="June 2" onchange="toggleDatePicker(this)"> Week of June 2nd</label>
+                <input type="date" id="date-June 2" class="date-selection" min="2024-06-02" max="2024-06-08">
             </div>
             <button type="submit">Submit</button>
         </form>

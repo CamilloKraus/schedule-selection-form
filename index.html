@@ -67,41 +67,44 @@
             dateSelection.style.display = weekCheckbox.checked ? 'block' : 'none';
         }
 
-    function submitForm(event) {
-    event.preventDefault();
-    let email = document.getElementById("email").value;
-    let selectedWeeks = [];
+        function submitForm(event) {
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            let selectedWeeks = [];
 
-    document.querySelectorAll('.week-checkbox:checked').forEach(week => {
-        let weekId = week.value;
-        let selectedDate = document.getElementById("date-" + weekId).value;
-        if (selectedDate) {
-            selectedWeeks.push(`${weekId}: ${selectedDate}`);
+            document.querySelectorAll('.week-checkbox:checked').forEach(week => {
+                let weekId = week.value;
+                let selectedDate = document.getElementById("date-" + weekId).value;
+                if (selectedDate) {
+                    selectedWeeks.push(`${weekId}: ${selectedDate}`);
+                }
+            });
+
+            let data = {
+                email: email,
+                weeks: selectedWeeks
+            };
+
+            fetch("https://script.google.com/macros/s/AKfycby8RtYKT2XUdCF48lyoqAO9ww_pl8yVJd0-_2r7ivOQD16a2hEqpSboPr6ftivzyVYH/exec", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "Success") {
+                    alert("Form submitted successfully!");
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                alert("Error submitting form: " + error);
+                console.error("Fetch error:", error);
+            });
         }
-    });
-
-    let data = {
-        email: email,
-        weeks: selectedWeeks
-    };
-
-    fetch("https://script.google.com/macros/s/AKfycby8RtYKT2XUdCF48lyoqAO9ww_pl8yVJd0-_2r7ivOQD16a2hEqpSboPr6ftivzyVYH/exec", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.text())
-    .then(data => {
-        alert("Form submitted successfully!");
-        console.log("Response from server:", data);
-    })
-    .catch(error => {
-        alert("Error submitting form: " + error);
-    });
-}
-
     </script>
 </head>
 <body>

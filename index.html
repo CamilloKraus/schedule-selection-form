@@ -1,0 +1,57 @@
+<form id="scheduleForm">
+    <label>Email:</label>
+    <input type="email" id="email" required>
+    <br><br>
+
+    <div class="week-selection">
+        <label><input type="checkbox" class="week-checkbox" value="May 6"> Week of May 6th</label>
+        <input type="date" id="date-May6" class="date-selection" min="2024-05-06" max="2024-05-12">
+    </div>
+    <div class="week-selection">
+        <label><input type="checkbox" class="week-checkbox" value="May 13"> Week of May 13th</label>
+        <input type="date" id="date-May13" class="date-selection" min="2024-05-13" max="2024-05-19">
+    </div>
+    <div class="week-selection">
+        <label><input type="checkbox" class="week-checkbox" value="May 20"> Week of May 20th</label>
+        <input type="date" id="date-May20" class="date-selection" min="2024-05-20" max="2024-05-26">
+    </div>
+    <div class="week-selection">
+        <label><input type="checkbox" class="week-checkbox" value="May 27"> Week of May 27th</label>
+        <input type="date" id="date-May27" class="date-selection" min="2024-05-27" max="2024-06-02">
+    </div>
+    <div class="week-selection">
+        <label><input type="checkbox" class="week-checkbox" value="June 3"> Week of June 3rd</label>
+        <input type="date" id="date-June3" class="date-selection" min="2024-06-03" max="2024-06-09">
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById("scheduleForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let email = document.getElementById("email").value;
+        let selectedWeeks = [];
+
+        document.querySelectorAll('.week-checkbox:checked').forEach(week => {
+            let weekId = week.value;
+            let selectedDate = document.getElementById("date-" + weekId.replace(" ", "")).value;
+            if (selectedDate) {
+                selectedWeeks.push(weekId + ": " + selectedDate);
+            }
+        });
+
+        let formData = new FormData();
+        formData.append("email", email);
+        formData.append("weeks", JSON.stringify(selectedWeeks));
+
+        fetch(https://script.google.com/macros/s/AKfycby83fV8uXmAtmTHpCjI0JBxoW9GrOUiMxMG1j5Qjqs4ChQclWSQnF-TBCIqitcgJvfC/exec, {  // Replace with your Web App URL
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => alert("Form submitted successfully!"))
+        .catch(error => alert("Error submitting form: " + error));
+    });
+</script>

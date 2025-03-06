@@ -1,57 +1,135 @@
-<form id="scheduleForm">
-    <label>Email:</label>
-    <input type="email" id="email" required>
-    <br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Selection | Cygnum Capital</title>
+    <link rel="stylesheet" href="https://www.cygnumcapital.com/styles.css"> <!-- Ensure this points to the correct stylesheet -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .logo {
+            width: 180px;
+            margin-bottom: 20px;
+        }
+        .week-selection {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .date-selection {
+            display: none;
+            margin-top: 10px;
+            width: 100%;
+        }
+        input[type="email"], input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #004F80;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #003a60;
+        }
+    </style>
+    <script>
+        function toggleDatePicker(weekCheckbox) {
+            let weekId = weekCheckbox.value;
+            let dateSelection = document.getElementById('date-' + weekId);
+            dateSelection.style.display = weekCheckbox.checked ? 'block' : 'none';
+        }
 
-    <div class="week-selection">
-        <label><input type="checkbox" class="week-checkbox" value="May 6"> Week of May 6th</label>
-        <input type="date" id="date-May6" class="date-selection" min="2024-05-06" max="2024-05-12">
+        function submitForm(event) {
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            let selectedWeeks = [];
+
+            document.querySelectorAll('.week-checkbox:checked').forEach(week => {
+                let weekId = week.value;
+                let selectedDate = document.getElementById("date-" + weekId).value;
+                if (selectedDate) {
+                    selectedWeeks.push(`${weekId}: ${selectedDate}`);
+                }
+            });
+
+            let formData = new FormData();
+            formData.append("email", email);
+            formData.append("weeks", JSON.stringify(selectedWeeks));
+
+            fetch("https://script.google.com/macros/s/AKfycby83fV8uXmAtmTHpCjI0JBxoW9GrOUiMxMG1j5Qjqs4ChQclWSQnF-TBCIqitcgJvfC/exec", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Form submitted successfully!");
+                console.log("Response from server: ", data);
+            })
+            .catch(error => {
+                alert("Error submitting form: " + error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="/mnt/data/image.png" alt="Cygnum Capital Logo" class="logo"> <!-- Updated with provided logo -->
+        <h2>Schedule Selection</h2>
+        <form onsubmit="submitForm(event)">
+            <label>Email:</label>
+            <input type="email" id="email" required>
+            <br><br>
+            
+            <div class="week-selection">
+                <label><input type="checkbox" class="week-checkbox" value="May 6" onchange="toggleDatePicker(this)"> Week of May 6th</label>
+                <input type="date" id="date-May 6" class="date-selection" min="2024-05-06" max="2024-05-12">
+            </div>
+            <div class="week-selection">
+                <label><input type="checkbox" class="week-checkbox" value="May 13" onchange="toggleDatePicker(this)"> Week of May 13th</label>
+                <input type="date" id="date-May 13" class="date-selection" min="2024-05-13" max="2024-05-19">
+            </div>
+            <div class="week-selection">
+                <label><input type="checkbox" class="week-checkbox" value="May 20" onchange="toggleDatePicker(this)"> Week of May 20th</label>
+                <input type="date" id="date-May 20" class="date-selection" min="2024-05-20" max="2024-05-26">
+            </div>
+            <div class="week-selection">
+                <label><input type="checkbox" class="week-checkbox" value="May 27" onchange="toggleDatePicker(this)"> Week of May 27th</label>
+                <input type="date" id="date-May 27" class="date-selection" min="2024-05-27" max="2024-06-02">
+            </div>
+            <div class="week-selection">
+                <label><input type="checkbox" class="week-checkbox" value="June 3" onchange="toggleDatePicker(this)"> Week of June 3rd</label>
+                <input type="date" id="date-June 3" class="date-selection" min="2024-06-03" max="2024-06-09">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
     </div>
-    <div class="week-selection">
-        <label><input type="checkbox" class="week-checkbox" value="May 13"> Week of May 13th</label>
-        <input type="date" id="date-May13" class="date-selection" min="2024-05-13" max="2024-05-19">
-    </div>
-    <div class="week-selection">
-        <label><input type="checkbox" class="week-checkbox" value="May 20"> Week of May 20th</label>
-        <input type="date" id="date-May20" class="date-selection" min="2024-05-20" max="2024-05-26">
-    </div>
-    <div class="week-selection">
-        <label><input type="checkbox" class="week-checkbox" value="May 27"> Week of May 27th</label>
-        <input type="date" id="date-May27" class="date-selection" min="2024-05-27" max="2024-06-02">
-    </div>
-    <div class="week-selection">
-        <label><input type="checkbox" class="week-checkbox" value="June 3"> Week of June 3rd</label>
-        <input type="date" id="date-June3" class="date-selection" min="2024-06-03" max="2024-06-09">
-    </div>
-
-    <button type="submit">Submit</button>
-</form>
-
-<script>
-    document.getElementById("scheduleForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        let email = document.getElementById("email").value;
-        let selectedWeeks = [];
-
-        document.querySelectorAll('.week-checkbox:checked').forEach(week => {
-            let weekId = week.value;
-            let selectedDate = document.getElementById("date-" + weekId.replace(" ", "")).value;
-            if (selectedDate) {
-                selectedWeeks.push(weekId + ": " + selectedDate);
-            }
-        });
-
-        let formData = new FormData();
-        formData.append("email", email);
-        formData.append("weeks", JSON.stringify(selectedWeeks));
-
-        fetch(https://script.google.com/macros/s/AKfycby83fV8uXmAtmTHpCjI0JBxoW9GrOUiMxMG1j5Qjqs4ChQclWSQnF-TBCIqitcgJvfC/exec, {  // Replace with your Web App URL
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => alert("Form submitted successfully!"))
-        .catch(error => alert("Error submitting form: " + error));
-    });
-</script>
+</body>
+</html>

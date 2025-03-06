@@ -84,7 +84,7 @@
             formData.append("email", email);
             formData.append("weeks", JSON.stringify(selectedWeeks));
 
-            fetch("https://script.google.com/macros/s/AKfycbwsqk0BWi266elMgd_VAiR-pDbx-uWtY3t1Eet5RZWMQ78qnIdTB3uKLEjOnguvQkgU/exec", {
+            fetch("https://script.google.com/macros/s/AKfycby8RtYKT2XUdCF48lyoqAO9ww_pl8yVJd0-_2r7ivOQD16a2hEqpSboPr6ftivzyVYH/exec", {
                 method: "POST",
                 body: formData
             })
@@ -101,7 +101,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="/mnt/data/image.png" alt="Cygnum Capital Logo" class="logo"> <!-- Updated with provided logo -->
+        <img src="https://raw.githubusercontent.com/CamilloKraus/schedule-selection-form/main/Screenshot%202025-03-06%20095003.png" alt="Cygnum Capital Logo" class="logo"> <!-- Updated with provided logo -->
         <h2>Schedule Selection</h2>
         <form onsubmit="submitForm(event)">
             <label>Email:</label>

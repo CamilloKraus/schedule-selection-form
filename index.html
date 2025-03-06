@@ -84,10 +84,17 @@
             formData.append("email", email);
             formData.append("weeks", JSON.stringify(selectedWeeks));
 
-            fetch("https://script.google.com/macros/s/AKfycbw5EP0464CLnQhv3wDtKkFs0KGD6F6Xo6FhuBv-_RA/dev", {
-                method: "POST",
-                body: formData
-            })
+fetch("https://script.google.com/macros/s/AKfycbw5EP0464CLnQhv3wDtKkFs0KGD6F6Xo6FhuBv-_RA/dev", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        email: email,
+        weeks: selectedWeeks
+    })
+})
+
             .then(response => response.text())
             .then(data => {
                 alert("Form submitted successfully!");

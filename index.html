@@ -1,143 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule Selection | Cygnum Capital</title>
-    <link rel="stylesheet" href="https://www.cygnumcapital.com/styles.css"> <!-- Ensure this points to the correct stylesheet -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            max-width: 500px;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .logo {
-            width: 180px;
-            margin-bottom: 20px;
-        }
-        .week-selection {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .date-selection {
-            display: none;
-            margin-top: 10px;
-            width: 100%;
-        }
-        input[type="email"], input[type="date"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #004F80;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 15px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #003a60;
-        }
-    </style>
-    <script>
-        function toggleDatePicker(weekCheckbox) {
-            let weekId = weekCheckbox.value;
-            let dateSelection = document.getElementById('date-' + weekId);
-            dateSelection.style.display = weekCheckbox.checked ? 'block' : 'none';
-        }
+function submitForm(event) {
+    event.preventDefault();
+    let email = document.getElementById("email").value;
+    let selectedWeeks = [];
 
-        function submitForm(event) {
-            event.preventDefault();
-            let email = document.getElementById("email").value;
-            let selectedWeeks = [];
+    document.querySelectorAll('.week-checkbox:checked').forEach(week => {
+        let weekId = week.value;
+        let selectedDate = document.getElementById("date-" + weekId).value;
+        if (selectedDate) {
+            selectedWeeks.push(`${weekId}: ${selectedDate}`);
+        }
+    });
 
-            document.querySelectorAll('.week-checkbox:checked').forEach(week => {
-                let weekId = week.value;
-                let selectedDate = document.getElementById("date-" + weekId).value;
-                if (selectedDate) {
-                    selectedWeeks.push(`${weekId}: ${selectedDate}`);
-                }
-            });
-
-            let formData = new FormData();
-            formData.append("email", email);
-            formData.append("weeks", JSON.stringify(selectedWeeks));
-
-fetch("https://script.google.com/macros/s/AKfycbw5EP0464CLnQhv3wDtKkFs0KGD6F6Xo6FhuBv-_RA/dev", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
+    let data = {
         email: email,
         weeks: selectedWeeks
-    })
-})
+    };
 
-            .then(response => response.text())
-            .then(data => {
-                alert("Form submitted successfully!");
-                console.log("Response from server: ", data);
-            })
-            .catch(error => {
-                alert("Error submitting form: " + error);
-            });
-        }
-    </script>
-</head>
-<body>
-    <div class="container">
-        <img src="https://raw.githubusercontent.com/CamilloKraus/schedule-selection-form/main/Screenshot%202025-03-06%20095003.png" alt="Cygnum Capital Logo" class="logo"> <!-- Updated with provided logo -->
-        <h2>Schedule Selection</h2>
-        <p>Please select all the options that work for you.<br>Location TBD.</p>
-        <form onsubmit="submitForm(event)">
-            <label>Email:</label>
-            <input type="email" id="email" required>
-            <br><br>
-            
-            <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 5" onchange="toggleDatePicker(this)"> Week of May 5th</label>
-                <input type="date" id="date-May 5" class="date-selection" min="2025-05-05" max="2025-05-11">
-            </div>
-            <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 12" onchange="toggleDatePicker(this)"> Week of May 12th</label>
-                <input type="date" id="date-May 12" class="date-selection" min="2025-05-12" max="2025-05-18">
-            </div>
-            <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 19" onchange="toggleDatePicker(this)"> Week of May 19th</label>
-                <input type="date" id="date-May 19" class="date-selection" min="2025-05-19" max="2025-05-25">
-            </div>
-            <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="May 26" onchange="toggleDatePicker(this)"> Week of May 26th</label>
-                <input type="date" id="date-May 26" class="date-selection" min="2025-05-26" max="2025-06-01">
-            </div>
-            <div class="week-selection">
-                <label><input type="checkbox" class="week-checkbox" value="June 2" onchange="toggleDatePicker(this)"> Week of June 2nd</label>
-                <input type="date" id="date-June 2" class="date-selection" min="2025-06-02" max="2025-06-08">
-            </div>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-</body>
-</html>
+    fetch("https://script.google.com/macros/s/AKfycby8RtYKT2XUdCF48lyoqAO9ww_pl8yVJd0-_2r7ivOQD16a2hEqpSboPr6ftivzyVYH/exec", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert("Form submitted successfully!");
+        console.log("Response from server:", data);
+    })
+    .catch(error => {
+        alert("Error submitting form: " + error);
+    });
+}
